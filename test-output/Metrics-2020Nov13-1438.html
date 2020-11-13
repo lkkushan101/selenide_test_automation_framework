@@ -1,0 +1,450 @@
+<!DOCTYPE doctype html>
+<html lang="en">
+ <head>
+<link href="https://img.icons8.com/flat_round/64/000000/bar-chart.png" rel="shortcut icon" type="image/x-icon"/>
+<title> TestNG Metrics Report</title>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"/>
+<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+<script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
+  <!-- Bootstrap core Googleccharts -->
+<script src="https://www.gstatic.com/charts/loader.js" type="text/javascript"></script>
+  <script type="text/javascript">
+google.charts.load('current', {packages: ['corechart']});
+  </script>
+  <!-- Bootstrap core Datatable-->
+<script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js" type="text/javascript"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+.sidebar { position: fixed; top: 0; bottom: 0;left: 0; z-index: 100; box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);} 
+.sidebar-sticky { position: relative;top: 0; height: calc(100vh - 48px); padding-top: .5rem; overflow-x: hidden; overflow-y: auto;}
+@supports ((position: -webkit-sticky) or (position: sticky)) { .sidebar-sticky { position: -webkit-sticky; position: sticky;}}
+.sidebar .nav-link {color: black;}.sidebar .nav-link.active { color: #007bff;}.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {color: inherit;} [role="main"] {padding-top: 8px;} body {height: 100%;margin: 0; background-color: white;}
+.tablinkLog {cursor: pointer;}
+@import url(https://fonts.googleapis.com/css?family=Droid+Sans);
+.loader { position: fixed; left: 0px; top: 0px; width: 100%;height: 100%;z-index: 9999;
+background: url('http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif?e44397') 50% 50% no-repeat rgb(249,249,249);}
+/* TILES */
+.tile { width: 100%; float: left;margin: 0px;list-style: none;font-size: 40px;color: #FFF;-moz-border-radius: 5px;
+-webkit-border-radius: 5px;margin-bottom: 5px;position: relative;text-align: center;color: white!important;}
+.tile.tile-fail {background: #f44336!important;}.tile.tile-pass {background: #4CAF50!important;}
+.tile.tile-info {background: #009688!important;}.tile.tile-skip {background: #CCCC00!important;}.dt-buttons {margin-left: 5px;}
+</style></head></html><body><div class="loader"></div>
+  <div class="container-fluid">
+  <div class="row">
+<nav class="col-md-2 d-none d-md-block bg-light sidebar" style="font-size:16px;">
+<div class="sidebar-sticky">
+<ul class="nav flex-column">
+<img src=https://i.ibb.co/0j28fBG/tmetricslogo.png style="height:18vh!important;width:95%;"/>
+<br/>
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center text-muted">
+<span>Metrics</span><a class="d-flex align-items-center text-muted" href="#"></a></h6>
+      <li class="nav-item">
+<a class="tablink nav-link" href="#" id="defaultOpen" onclick="openPage('dashboard', this, 'orange')">
+	<i class="fa fa-dashboard"></i> Dashboard</a>
+      </li>
+      <li class="nav-item">
+<a class="tablink nav-link" href="#" onclick="openPage('classMetrics', this, 'orange');executeDataTable('#cm',3)">
+	<i class="fa fa-list-alt"></i> Class Metrics</a>
+      </li>
+      <li class="nav-item">
+<a class="tablink nav-link" href="#" onclick="openPage('testMetrics', this, 'orange');executeDataTable('#tm',3)">
+	<i class="fa fa-table"></i> Test Metrics</a>
+      </li>
+	  <li class="nav-item">
+<a class="tablink nav-link" href="#" onclick="openPage('methodMetrics', this, 'orange');executeDataTable('#mm',3)">
+	<i class="fa fa-table"></i> Method Metrics</a>
+      </li>
+      <li class="nav-item">
+ <a class="tablink nav-link" href="#" onclick="openPage('log', this, 'orange');"><i class="fa fa-wpforms"></i> TestNG Logs</a>
+</li>
+      <li class="nav-item">
+       <a class="tablink nav-link" href="#" onclick="openPage('statistics', this, 'orange');"><i class="fa fa-envelope-o"></i> Email Metrics</a>
+      </li>
+     </ul>
+    </div>
+   </nav>
+  </div>
+ </div><div class="col-md-9 ml-sm-auto col-lg-10 px-4" role="main">
+  <div class="tabcontent" id="dashboard">
+<div class="d-flex flex-column flex-md-row align-items-center p-1 mb-3 bg-light border-bottom shadow-sm">
+<h5 class="my-0 mr-md-auto font-weight-normal"><i class="fa fa-dashboard"></i> Dashboard</h5>
+<nav class="my-2 my-md-0 mr-md-3" style="color:red">
+<button type="button" class="btn" data-toggle="modal" data-target="#myModal"><i class="fa fa-desktop"></i> View Info</button>
+<!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+<div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+<h4 class="modal-title">Execution Info</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+   
+        <!-- Modal body -->
+<div class="modal-body">
+			<table class="table">
+				<tbody>
+				</tr>
+				  <tr>
+					<td>Executed By:</td>
+					<td>kam</td>
+				</tr>
+				  <tr>
+					<td>OS Name:</td>
+					<td>Windows 10</td>
+				</tr>
+				  <tr>
+					<td>Java Version:</td>
+					<td>1.8.0_191</td>
+				</tr>
+				  <tr>
+					<td>Generated Time:</td>
+					<td>Fri Nov 13 14:38:05 IST 2020</td>
+				</tr>
+				</tbody>
+			</table>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+</div>
+        
+      </div>
+    </div>
+  </div></nav>
+   </div>
+   <div class="row">
+    <div class="col-md"><a class="tile tile-info">1<p style="font-size:15px">Total Tests</p></a></div>
+    <div class="col-md"><a class="tile tile-pass">1<p style="font-size:15px">Pass</p></a></div>
+	<div class="col-md"><a class="tile tile-fail">0<p style="font-size:15px">Fail</p></a></div>
+	<div class="col-md"><a class="tile tile-skip">0<p style="font-size:15px">Skip</p></a></div>
+   </div><hr/>
+<div class="row">
+<div class="col-md-4" style="background-color:white;height:350px;width:auto;border:groove;">
+<span style="font-weight:bold">Test Status:</span>
+     <div id="testChartID" style="height:280px;width:auto;"></div>
+</div>
+    <div class="col-md-8" style="background-color:white;height:350px;width:auto;border:groove;">
+<span style="font-weight:bold">Top 5 Class Failures:</span>
+     <div id="classBarID" style="height:300px;width:auto;"></div>
+</div>
+   </div>
+   <div class="row">
+    <div class="col-md-12" style="background-color:white;height:450px;width:auto;border:groove;">
+<span style="font-weight:bold">Top 10 Test Performance(sec):</span>
+     <div id="testsBarID" style="height:400px;width:auto;"></div>
+</div>
+	<div class="col-md-12" style="background-color:white;height:450px;width:auto;border:groove;">
+<span style="font-weight:bold">Top 10 Config Methods Performance(sec):</span>
+     <div id="methodsBarID" style="height:400px;width:auto;"></div>
+</div>
+   </div>
+   <div class="row"><div class="col-md-12" style="height:25px;width:auto;">
+<p class="text-muted" style="text-align:center;font-size:9px">testng-metrics</p></div>
+   </div>
+   <script>
+window.onload = function(){
+    executeDataTable('#cm',3);
+    executeDataTable('#tm',3);
+	executeDataTable('#mm',3);
+	createPieChart(1,0,0,'testChartID','Test Status:');
+	createBarGraph('#cm',0,3,5,'classBarID','Number of failures ','Class'); 
+	createBarGraph('#tm',1,3,10,'testsBarID','Elapsed Time(s) ','Test');
+	createBarGraph('#mm',1,3,10,'methodsBarID','Elapsed Time(s) ','Method');
+	};
+   </script>  
+</div><div class="tabcontent" id="classMetrics">
+   <h4><b><i class="fa fa-table"></i> Class Metrics</b></h4><hr/>
+<table class="table table-striped table-bordered" id="cm">
+<thead><tr>
+<th>Class Name</th>
+<th>Total</th>
+<th>Passed</th>
+<th>Failed</th>
+	<th>Skipped</th>
+<th>Pass (%)</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="word-wrap: break-word;max-width: 300px; white-space: normal">LoginTest</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">100.0</td>
+</tr>
+ </tbody>
+   </table>
+<div class="row"><div class="col-md-12" style="height:25px;width:auto;"></div></div></div><div class="tabcontent" id="testMetrics">
+   <h4><b><i class="fa fa-table"></i> Test Metrics</b></h4><h6 style="text-align:right">Total Execution Time: <b style="color:Red; text-align:right">00:00:12</b></h6><hr/> </h6>
+<table class="table table-striped table-bordered" id="tm">
+    <thead><tr>
+      <th>Class Name</th>
+<th>Test Name</th>
+      <th>Status</th>
+      <th>Time(s)</th>
+	  <th>Error Message</th>
+    </tr></thead>
+<tbody>
+     <tr>
+      <td style="word-wrap: break-word;max-width: 200px; white-space: normal">LoginTest</td>
+<td style="word-wrap: break-word;max-width: 250px; white-space: normal;">test</td>
+<td style="text-align:center">PASS</td>
+<td style="text-align:center">8</td>
+<td style="word-wrap: break-word;max-width: 300px; white-space: normal"></td>
+     </tr>
+</tbody>
+   </table>
+<div class="row"><div class="col-md-12" style="height:25px;width:auto;"></div></div></div><div class="tabcontent" id="methodMetrics">
+   <h4><b><i class="fa fa-table"></i> Method Metrics</b></h4><hr/>
+<table class="table table-striped table-bordered" id="mm">
+    <thead><tr>
+      <th>Class Name</th>
+<th>Method Name</th>
+      <th>Status</th>
+      <th>Time(s)</th>
+	  <th>Error Message</th>
+    </tr></thead>
+<tbody>
+     <tr>
+      <td style="word-wrap: break-word;max-width: 200px; white-space: normal">LoginTest</td>
+<td style="word-wrap: break-word;max-width: 250px; white-space: normal;">setup</td>
+<td style="text-align:center">PASS</td>
+<td style="text-align:center">3</td>
+<td style="word-wrap: break-word;max-width: 300px; white-space: normal"></td>
+     </tr>
+</tbody>
+   </table>
+<div class="row"><div class="col-md-12" style="height:25px;width:auto;"></div></div></div><div class="tabcontent" id="log"><p style="text-align:right">**<b>index.html</b> need to be in current folder in order to display here</p>
+<div class="embed-responsive embed-responsive-4by3"><iframe class="embed-responsive-item" src="index.html"></iframe></div></div><div class="tabcontent" id="statistics">
+   <h4><b><i class="fa fa-envelope-o"></i> Email Statistics</b></h4><hr/>
+<button class="btn btn-primary active inner" id="create" onclick="updateTextArea();this.style.visibility= 'hidden';" role="button">
+<i class="fa fa-cogs"></i> Generate Statistics Email</button>
+<a class="btn btn-primary active inner" download="message.eml" id="downloadlink" role="button" style="display: none; width: 300px;">
+<i class="fa fa-download"></i> Click Here To Download Email</a>
+   <script>
+    function updateTextArea() {
+var suite = "<b>Top 5 Class Failures:</b><br><br>" + $("#classBarID table")[0].outerHTML;
+var test = "<b>Top 10 Test Performance:</b><br><br>" + $("#testsBarID table")[0].outerHTML;
+	var method = "<b>Top 10 Method Performance:</b><br><br>" + $("#methodsBarID table")[0].outerHTML;
+var saluation="<pre><br>Please refer TestNG Metrics Report for detailed statistics.<br><br>Regards,<br>QA Team</pre></body></html>";
+document.getElementById("textbox").value += "<br>" + suite + "<br>" + test + "<br>" + method + saluation;
+$("#create").click(function(){
+    $(this).remove();
+    });
+}
+   </script>
+<textarea class="col-md-12" id="textbox" style="height: 400px; padding:1em;">
+To: myemail1234@email.com
+Subject: Automation Execution Status
+X-Unsent: 1
+Content-Type: text/html
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Test Email Sample</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0 " name="viewport"/>
+  <style>body {background-color:#F2F2F2; }
+	body, html, table,pre,b { font-family: Courier New, Arial, sans-serif; font-size: 1em; }.pastdue { color: crimson; }
+	table {border: 1px solid silver;padding: 6px; margin-left: 30px; width: 600px;}
+	 thead{text-align: center;font-size: 1.1em;background-color: #B0C4DE;font-weight: bold;color: #2D2C2C;}
+	 tbody{text-align: center;}th {width: 25%;word-wrap:break-word;}
+</style></head>
+<body><pre>Hi Team,
+Following are the last build execution statistics.
+
+<b>Test Status:<b>
+
+</b></b></pre>
+	<table>
+	<thead>
+		<th style="width: 25%;">Total</th>
+		<th style="width: 25%;">Pass</th>
+		<th style="width: 25%;">Fail</th>
+		<th style="width: 25%;">Skip</th>
+	 </thead>
+	<tbody><tr>
+		<td style="background-color: #009688;text-align: center;"> 1 </td>
+		<td style="background-color: #4CAF50;text-align: center;">1</td>
+		<td style="background-color: #f44336;text-align: center;">0</td>
+		<td style="background-color: #CCCC00;text-align: center;">0</td>
+	</tr></tbody>
+	</table>
+
+</body></html></textarea>
+</div></div><script>
+ function createPieChart(passed, failed, skipped, ChartID, ChartName) {
+var status = [];
+  status.push(['Status', 'Percentage']);
+status.push(['PASS', parseInt(passed)], ['FAIL', parseInt(failed)],['SKIP', parseInt(skipped)]);
+var data = google.visualization.arrayToDataTable(status);
+  var options = {
+    pieHole: 0.6,
+    legend: 'none',
+chartArea: {
+      width: "95%",
+      height: "90%"
+    },
+    colors: ['#4CAF50','#f44336','#CCCC00'],
+  };
+var chart = new google.visualization.PieChart(document.getElementById(ChartID));
+  chart.draw(data, options);
+}
+</script>
+<script>
+  (function () {
+  var textFile = null,
+    makeTextFile = function (text) {
+      var data = new Blob([text], {
+type: 'text/plain'
+      });
+      if (textFile !== null) {
+        window.URL.revokeObjectURL(textFile);
+      }
+textFile = window.URL.createObjectURL(data);
+      return textFile;
+    };
+  var create = document.getElementById('create'),
+textbox = document.getElementById('textbox');
+  create.addEventListener('click', function () {
+var link = document.getElementById('downloadlink');
+    link.href = makeTextFile(textbox.value);
+link.style.display = 'block';
+  }, false);
+ })();
+ </script>
+ <script>
+function createBarGraph(tableID, keyword_column, time_column, limit, ChartID, Label, type) {
+var status = [];
+  css_selector_locator = tableID + ' tbody >tr'
+  var rows = $(css_selector_locator);
+var columns;
+  var myColors = ['#4F81BC','#C0504E','#9BBB58','#24BEAA','#8064A1','#4AACC5','#F79647','#815E86','#76A032','#34558B'];
+status.push([type, Label, {role: 'annotation'}, {role: 'style'}]);
+  for (var i = 0; i < rows.length; i++) {
+    if (i == Number(limit)) {
+break;
+    }
+    //status = [];
+    name_value = $(rows[i]).find('td');
+    time = ($(name_value[Number(time_column)]).html()).trim();
+keyword = ($(name_value[Number(keyword_column)]).html()).trim();
+    status.push([keyword, parseFloat(time), parseFloat(time), myColors[i]]);
+}
+  var data = google.visualization.arrayToDataTable(status);
+  var options = {
+    legend: 'none',
+chartArea: { width: "92%", height: "75%"},
+    bar: { groupWidth: '90%'},
+    annotations: {
+alwaysOutside: true,
+      textStyle: {
+        fontName: 'Comic Sans MS',fontSize: 13,bold: true,italic: true,color: "black", },
+},
+    hAxis: {
+      textStyle: {fontName: 'Arial',fontSize: 10,}
+    },
+    vAxis: {
+      gridlines: {count: 10},
+textStyle: {fontName: 'Comic Sans MS',fontSize: 10,}
+    },
+  };
+var chart = new google.visualization.ColumnChart(document.getElementById(ChartID));
+chart.draw(data, options);
+ }
+ </script>
+ <script>
+  function executeDataTable(tabname, sortCol) {
+var fileTitle;
+  switch (tabname) {
+    case "#cm":
+      fileTitle = "ClassMetrics";
+break;
+    case "#tm":
+      fileTitle = "TestMetrics";
+      break;
+    default:
+fileTitle = "metrics";
+  }
+  $(tabname).DataTable({
+    retrieve: true,
+	"order": [[Number(sortCol), "desc"]],
+dom: 'l<".margin" B>frtip',
+    buttons: [
+      'copy',
+      {
+        extend: 'csv',
+filename: function () {
+          return fileTitle + '-' + new Date().toLocaleString();
+},
+        title: '',
+      },
+      {
+        extend: 'excel',
+        filename: function () {
+return fileTitle + '-' + new Date().toLocaleString();
+        },
+        title: '',
+      },
+      {
+extend: 'pdf',
+        filename: function () {
+          return fileTitle + '-' + new Date().toLocaleString();
+},
+        title: '',
+      },
+      {
+        extend: 'print',
+        title: '',
+      },
+],
+  });
+ }
+ </script>
+ <script>
+ function openPage(pageName, elmnt, color) {
+  var i, tabcontent, tablinks;
+tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+document.getElementById(pageName).style.display = "block";
+  elmnt.style.backgroundColor = color;
+ }
+// Get the element with id="defaultOpen" and click on it
+ document.getElementById("defaultOpen").click();
+</script>
+ <script>
+ document.getElementById("defaultOpen").click();
+ </script>
+ <script>
+$(window).on('load',function(){$('.loader').fadeOut();});
+ </script>
+ </div>
+</body>
+</html>
